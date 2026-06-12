@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>♡ rap bracket uwu ♡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink: #ffd6ec;
+    --pink-deep: #ff8fc7;
+    --lav: #e3d4ff;
+    --lav-deep: #b18bff;
+    --sky: #cdf3ff;
+    --sky-deep: #7fdcff;
+    --cream: #fffaf3;
+    --plum: #6a3f7a;
+    --plum-soft: #9a73a8;
+    --gold: #ffd66b;
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    font-family:'Quicksand', sans-serif;
+    background: linear-gradient(135deg, var(--pink) 0%, var(--lav) 45%, var(--sky) 100%);
+    background-attachment: fixed;
+    color: var(--plum);
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* floating sparkles */
+  .sparkle{
+    position:fixed;
+    pointer-events:none;
+    font-size: 22px;
+    opacity:.6;
+    animation: float linear infinite;
+    z-index:0;
+    user-select:none;
+  }
+  @keyframes float{
+    0%   { transform: translateY(110vh) rotate(0deg); opacity:0; }
+    10%  { opacity:.7; }
+    90%  { opacity:.7; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity:0; }
+  }
+
+  .wrap{
+    position:relative;
+    z-index:1;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 28px 18px 60px;
+  }
+
+  /* header */
+  header{
+    text-align:center;
+    margin-bottom: 18px;
+  }
+  .title{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:800;
+    font-size: clamp(28px, 7vw, 46px);
+    color: var(--plum);
+    text-shadow: 2px 2px 0 #fff, 4px 4px 0 rgba(177,139,255,.35);
+    margin: 6px 0 2px;
+    letter-spacing: 1px;
+  }
+  .subtitle{
+    font-size: 14px;
+    color: var(--plum-soft);
+    font-weight:600;
+  }
+  .deco-row{
+    font-size: 22px;
+    letter-spacing: 10px;
+    margin-bottom: 6px;
+  }
+
+  /* progress ribbon */
+  .ribbon{
+    background: #fff;
+    border-radius: 999px;
+    padding: 10px 18px;
+    margin: 20px auto 28px;
+    max-width: 560px;
+    box-shadow: 0 4px 0 rgba(177,139,255,.25);
+    border: 2px solid var(--lav-deep);
+  }
+  .ribbon-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size: 14px;
+    color: var(--plum);
+    margin-bottom:6px;
+  }
+  .ribbon-track{
+    height: 12px;
+    border-radius: 999px;
+    background: #ffe9f5;
+    overflow:hidden;
+    position:relative;
+  }
+  .ribbon-fill{
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--pink-deep), var(--lav-deep), var(--sky-deep));
+    transition: width .4s ease;
+    position:relative;
+  }
+  .ribbon-fill::after{
+    content:"";
+    position:absolute; inset:0;
+    background: repeating-linear-gradient(45deg, rgba(255,255,255,.35) 0 8px, transparent 8px 16px);
+  }
+
+  /* battle area */
+  .battle{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 14px;
+    flex-wrap: wrap;
+    position: relative;
+    min-height: 320px;
+  }
+
+  .card{
+    background: var(--cream);
+    border-radius: 26px;
+    width: 250px;
+    min-height: 250px;
+    padding: 26px 18px;
+    text-align:center;
+    cursor:pointer;
+    border: 3px solid transparent;
+    box-shadow: 0 8px 0 rgba(177,139,255,.25), 0 8px 24px rgba(154, 115, 168, .18);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap: 10px;
+  }
+  .card:hover{
+    transform: translateY(-6px) scale(1.02);
+    border-color: var(--pink-deep);
+    box-shadow: 0 12px 0 rgba(177,139,255,.3), 0 14px 28px rgba(154,115,168,.25);
+  }
+  .card:active{ transform: translateY(-2px) scale(.99); }
+  .card.chosen{
+    animation: pop .35s ease;
+    border-color: var(--gold);
+    background: #fff7e0;
+  }
+  .card.fading{
+    opacity: 0;
+    transform: scale(.85);
+    transition: opacity .35s ease, transform .35s ease;
+  }
+  @keyframes pop{
+    0%{ transform: scale(1); }
+    40%{ transform: scale(1.08); }
+    100%{ transform: scale(1.02); }
+  }
+
+  .card .emoji{ font-size: 36px; }
+  .card .artist{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size: 19px;
+    color: var(--plum);
+    line-height:1.25;
+  }
+  .card .album{
+    font-size: 15px;
+    font-weight:600;
+    color: var(--plum-soft);
+    font-style: italic;
+    line-height:1.3;
+  }
+  .card .year{
+    margin-top:4px;
+    display:inline-block;
+    background: linear-gradient(90deg, var(--lav), var(--sky));
+    border-radius: 999px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight:700;
+    color: var(--plum);
+  }
+
+  .vs{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:800;
+    font-size: 26px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--pink-deep), var(--lav-deep));
+    width: 56px; height:56px;
+    border-radius: 50%;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 4px 0 rgba(154,115,168,.3);
+    flex-shrink:0;
+    animation: wiggle 2.4s ease-in-out infinite;
+  }
+  @keyframes wiggle{
+    0%,100%{ transform: rotate(-6deg); }
+    50%{ transform: rotate(6deg); }
+  }
+
+  /* footer controls */
+  .controls{
+    text-align:center;
+    margin-top: 26px;
+    display:flex;
+    gap: 12px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  button.ctrl{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size: 14px;
+    color: var(--plum);
+    background: #fff;
+    border: 2px solid var(--lav-deep);
+    border-radius: 999px;
+    padding: 10px 22px;
+    cursor:pointer;
+    box-shadow: 0 4px 0 rgba(177,139,255,.25);
+    transition: transform .12s ease;
+  }
+  button.ctrl:hover{ transform: translateY(-2px); }
+  button.ctrl:active{ transform: translateY(1px); box-shadow: 0 2px 0 rgba(177,139,255,.25); }
+
+  /* winner screen */
+  .winner-screen{
+    text-align:center;
+    padding: 40px 20px;
+  }
+  .winner-screen .crown{
+    font-size: 60px;
+    display:block;
+    margin-bottom: 6px;
+    animation: bounce 1.4s ease-in-out infinite;
+  }
+  @keyframes bounce{
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(-12px); }
+  }
+  .winner-card{
+    background: var(--cream);
+    border-radius: 30px;
+    border: 4px solid var(--gold);
+    padding: 34px 26px;
+    max-width: 360px;
+    margin: 0 auto;
+    box-shadow: 0 10px 0 rgba(255,214,107,.35), 0 14px 30px rgba(154,115,168,.25);
+  }
+  .winner-card .artist{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:800;
+    font-size: 26px;
+    color: var(--plum);
+  }
+  .winner-card .album{
+    font-style: italic;
+    font-weight:600;
+    color: var(--plum-soft);
+    margin-top: 6px;
+    font-size: 17px;
+  }
+  .winner-card .year{
+    margin-top:10px;
+    display:inline-block;
+    background: linear-gradient(90deg, var(--gold), var(--pink-deep));
+    color:#fff;
+    border-radius: 999px;
+    padding: 5px 16px;
+    font-size: 13px;
+    font-weight:700;
+  }
+
+  .footer-note{
+    text-align:center;
+    margin-top: 30px;
+    font-size: 12px;
+    color: var(--plum-soft);
+    opacity:.8;
+  }
+
+  @media (max-width: 540px){
+    .vs{ order: 99; }
+    .card{ width: 100%; max-width: 320px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="deco-row">✧˚ ༘ ⋆｡˚ 🎧 ˚｡⋆ ༘ ˚✧</div>
+    <div class="title">rap bracket uwu</div>
+    <div class="subtitle">256 album rap/trap italiani (2016–2026) ✿ scegli il tuo preferito ad ogni scontro!</div>
+  </header>
+
+  <div class="ribbon">
+    <div class="ribbon-top">
+      <span id="roundLabel">Turno 1 di 256 🌸</span>
+      <span id="matchLabel">Match 1 / 128</span>
+    </div>
+    <div class="ribbon-track">
+      <div class="ribbon-fill" id="ribbonFill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="battle" id="battle"></div>
+
+  <div class="controls">
+    <button class="ctrl" id="shuffleBtn">🔀 rimescola e ricomincia</button>
+    <button class="ctrl" id="undoBtn">↩︎ annulla scelta</button>
+  </div>
+
+  <div class="footer-note">made with 💗 ✧ ogni tabellone è generato a sorte: rimescola per un nuovo torneo!</div>
+</div>
+
+<script>
+/* ---------------- album pool (256) ---------------- */
+const albums = [
+["Sfera Ebbasta","Sfera Ebbasta",2016],["Sfera Ebbasta","Rockstar",2018],["Sfera Ebbasta","Famoso",2020],["Sfera Ebbasta","X2",2024],
+["Ghali","Album",2017],["Ghali","DNA",2020],["Ghali","Sensazione Ultra",2024],["Capo Plaza","19",2019],
+["Capo Plaza","Mi Fiderò",2020],["Capo Plaza","Plaza",2021],["Capo Plaza","Inferno",2023],["Dark Polo Gang","Dark Album",2017],
+["Dark Polo Gang","Anime Nere",2019],["Dark Polo Gang","Lavoro Sporco",2020],["Salmo","Playlist",2016],["Salmo","Ross Casino",2018],
+
+["Salmo","Flop",2019],["Salmo","CTRL+ALT+DEL",2024],["Salmo & Noyz Narcos","CCCP",2021],["Marracash","Persona",2019],
+["Marracash","Noi, Loro, Gli Altri",2021],["Marracash","È Finita la Pace",2024],["Marracash & Guè Pequeno","Santeria",2017],["Tedua","Mowgli",2017],
+["Tedua","Vita Vera",2018],["Tedua","Mowgli, The Wild",2019],["Tedua","Underwater",2021],["Tedua","Sangue Misto EP",2022],
+["Tedua","Lonewolf - Mr. Mai",2023],["Izi","Aletheia",2018],["Izi","Coro",2020],["Izi","Mostro",2024],
+
+["Lazza","Zzala",2021],["Lazza","Re Mida",2022],["Lazza","Sirio",2023],["Lazza","Locura",2024],
+["Shiva","Routine",2022],["Shiva","Milano Demons",2023],["Shiva","Santana",2024],["Geolier","Emanuele",2022],
+["Geolier","Dio lo Sa",2023],["Geolier","Buongiorno",2024],["Geolier","Free Mixtape Vol. 6",2021],["Rkomi","Dove gli Occhi non Arrivano",2019],
+["Rkomi","Taxi Driver",2021],["Rkomi","Vittoria",2024],["Ernia","Gemello",2019],["Ernia","Io Non Ho Paura",2020],
+
+["Ernia","Io Non Ho Paura Pt.2",2021],["Ernia","Cravings",2023],["Achille Lauro","Pour l'Amour",2017],["Achille Lauro","1990",2019],
+["Achille Lauro","Lausanne",2022],["Achille Lauro","Achille Idol Mixtape Vol.1",2020],["Fabri Fibra","Persona del Pubblico",2018],["Fabri Fibra","Tradimento",2022],
+["Guè","Sinatra",2017],["Guè","Mr. Fini",2018],["Guè","Madreperla",2020],["Guè","Mr. Fini 2",2022],
+["Guè","GVE 4",2023],["Gemitaiz","Mai Stato Sotto",2017],["Gemitaiz","Davide",2018],["Gemitaiz","Polaroid",2020],
+
+["Gemitaiz","MTT4",2022],["Madman","Egomostro",2018],["Nitro","Vivo a 1000",2017],["Nitro","Hellvisback",2018],
+["Nitro","Mentre Veniamo Uccisi",2019],["Nitro","Originale",2022],["Noyz Narcos","Enigma",2017],["Noyz Narcos","Mi Stanno Cercando",2022],
+["Massimo Pericolo","Scialla Semper",2019],["Massimo Pericolo","Logos",2020],["Mecna","Neon",2016],["Mecna","Disco Inverno",2017],
+["Mecna","Ouverture",2019],["Mecna","Per Sentirmi Vivo",2021],["Coez","Domani Smetto",2016],["Coez","E Forse Sono Pazzo",2018],
+
+["Coez","Volare",2020],["Nayt","Marlon Brando",2020],["Nayt","Demon Tape",2021],["Nayt","Cuore Drugo",2022],
+["Vegas Jones","Vacanze Romane",2018],["Vegas Jones","Million Dollar Baby",2020],["Tha Supreme","23 6451",2019],["Drefgold","Acapulco",2019],
+["Drefgold","Stelle Cadenti",2021],["Baby Gang","Crazy Story Mixtape Vol.1",2022],["Baby Gang","17",2023],["Simba La Rue","Realtà Violenta",2022],
+["Bresh","Cafè Concerto",2021],["Bresh","Mela Marcia",2023],["Bresh","33",2024],["Paky","Fenomeno",2022],
+
+["Paky","Dna",2023],["Luchè","Potere",2017],["Luchè","Dove Volano le Aquile",2019],["Luchè","Malavita Vibes 2",2020],
+["Luchè","NWNT",2022],["Clementino","Game Over",2017],["Clementino","Tarantelle",2022],["Rancore","Musica per Cani",2019],
+["Frah Quintale","Regardez-Moi",2017],["Frah Quintale","Benessere Plurale",2019],["Frah Quintale","Mediterraneo",2021],["Ketama126","Episodio I: Trinità",2022],
+["Anna","Vera Baddie",2023],["Anna","L'Inferno Esiste, Sono Stata Lì",2024],["Emis Killa","Mercurio",2018],["Emis Killa","Supereroe",2021],
+
+["Jake La Furia","Mr. Simpatia",2018],["Mostro","16/01/96",2016],["Mostro","Periferia Powa",2019],["Random","Lavora Spendi Crepa",2018],
+["Random","Vita Vera Mixtape Vol.4",2019],["Murubutu & Claver Gold","Mariposa",2021],["Speranza","Sciantosa",2021],["Speranza","Romantico Tour",2023],
+["Tony Effe","Untouchable",2022],["Tony Effe","Sayonara",2023],["Tony Effe","Icon",2024],["Side Baby","SDB",2018],
+["Side Baby","SDB2",2021],["Side Baby","SDB3",2023],["Niky Savage","Tutto Cambia",2022],["Wayne Santana","Demoni",2020],
+
+["Wayne Santana","Tradimento",2022],["Vacca","Vendetta",2018],["Rondodasosa","27 Gradi",2021],["Rondodasosa","Vibra",2023],
+["Neima Ezza","Stelle Cadenti EP",2022],["Artie 5ive","5IVE",2021],["Kid Yugi","Trip",2021],["Bomber JR","Phenomenon",2022],
+["Boro Boro","Slime",2021],["Sfera Ebbasta & Charlie Charles","Evil Mixtape",2016],["Dark Polo Gang","Trap Lovers",2016],["Fedez","Paranoia Airlines",2017],
+["Fedez","Disumano",2019],["J-Ax & Fedez","Comunisti col Rolex",2017],["Sangiovanni","Cadere Volare",2021],["Fred De Palma","Sembra Strano",2019],
+
+["Anastasio","Atto Zero",2019],["Willie Peyote","Sta Per Piovere",2017],["Willie Peyote","Iodegradabile",2021],["Willie Peyote","Le Cose Da Salvare",2023],
+["J-Ax","Reale",2017],["Don Joe","DonStrumentale 4",2019],["Egreen","Demoni e Pastelli",2018],["Ensi","Astronave Ensi",2017],
+["Mistaman","Mistadon Corleone",2019],["Inoki Ness","Trap Phone",2017],["Inoki Ness","Trap Phone 2",2019],["Astol","Manimal",2020],
+["Pyrex","Whip Game",2021],["Priestess","Regina",2022],["Lele Blade","Mood",2020],["Disme","Trasferta",2021],
+
+["Yung Snapp","Snapp World",2021],["Big Fish","Trap House Mixtape",2018],["Ele A","Stelle",2019],["Yung Bash","Bashtard",2021],
+["Charlie Charles","P2",2020],["Sfera Ebbasta","X2 Reload",2024],["Marracash","Persona Reloaded",2020],["Salmo","Playlist Reload",2017],
+["Achille Lauro","Achille Idol Mixtape Vol.2",2021],["Achille Lauro","Achille Idol Mixtape Vol.3",2021],["Capo Plaza","Inferno Reloaded",2023],["Geolier","Dio lo Sa Reload",2024],
+["Tedua","Vita Vera - Hardliffe Edition",2018],["Lazza","Sirio - Stardust Edition",2024],["Shiva","Routine Reloaded",2023],["Ernia","9019 EP",2018],
+
+["Gemello","Sulla Cresta dell'Onda",2017],["Mistaman","Sayan",2017],["Madame","Madame",2021],["Anna","Bando Mixtape",2021],
+["Taxi B","Caramba",2021],["Drefgold & Yung Snapp","Trap Boyz",2020],["Sfera Ebbasta","Rockstar Reload",2019],["Guè & Marracash","Scappo",2018],
+["Salmo","Demons Mixtape",2016],["Madman","Habibi Mixtape",2017],["Coez","Faccio un Casino",2016],["Mecna","Helsinki Mixtape",2016],
+["Vegas Jones","Mowgli Crew Tape",2017],["Tedua & Izi","Mowgli Bros EP",2018],["Rkomi","Io in Terra EP",2017],["Ernia","Pranzo di Famiglia",2018],
+
+["Speranza","Vita Da Local",2022],["Bresh","Goodbye Mixtape",2020],["Paky","Survivor EP",2021],["Simba La Rue","Welcome to the Trap",2021],
+["Baby Gang","Diretta da San Vittore",2023],["Niky Savage","Lonely Wolf",2021],["Vacca","Vendetta 2",2020],["Rondodasosa & Neima Ezza","Sosa Gang Tape",2022],
+["Artie 5ive","Trinity EP",2020],["Kid Yugi & Bomber JR","Trip 2",2022],["Boro Boro & Wayne Santana","Slime Pack",2022],["Tony Effe","Sayonara Reloaded",2024],
+["Side Baby","SDB Zero",2017],["Geolier","Souvenir EP",2022],["Lazza","Re Mida Reloaded",2022],["Shiva","Santana Reload",2024],
+
+["Capo Plaza","20",2024],["Tedua","Mowgli III EP",2024],["Marracash","Persona - Live & Rare",2020],["Salmo & Hellraisers","Vendetta Sound Pack",2018],
+["Ghali","Album Reload",2018],["Achille Lauro","Px3 Mixtape",2023],["Izi","Aletheia Reload",2019],["Nayt & Salmo","Cuore Drugo Reload",2023],
+["Gemitaiz & MadMan","Kepler EP",2016],["Noyz Narcos & Salmo","Vendetta EP",2017],["Fabri Fibra","Caos Reload",2017],["Frah Quintale & Coez","Estate Mixtape",2020],
+["Ketama126","Episodio II: Caronte",2024],["Anna","Vera Baddie Deluxe",2024],["Tha Supreme","Tha Supreme Deluxe",2020],["Drefgold","Acapulco 2",2021],
+
+["Lazza & Sfera Ebbasta","Scapigliato EP",2021],["Wayne Santana","Demoni 2.0",2021],["Rondodasosa","Trap Money EP",2020],["Ernia & Guè","Roma-Milano EP",2019],
+["Mecna & Mace","Disco Inverno Reload",2018],["Coez & Frah Quintale","Sotto Lo Stesso Cielo EP",2019],["Vegas Jones","Bling Bling Mixtape",2021],["Paky & Baby Gang","Crazy Duo EP",2023],
+["Speranza & Anna","Romantico Duo EP",2024],["Tedua","Underwater Reload",2022],["Geolier","Emanuele Reload",2023],["Shiva & Tedua","Demons Crew EP",2022],
+["Capo Plaza & Sfera Ebbasta","Allenamento EP",2020],["Salmo","Ghetto Hympno EP",2017],["Marracash & Charlie Charles","Persona Beats EP",2019],["Lazza","Locura Deluxe",2024],
+
+["Tony Effe & Tedua","Icon Reload",2024],["Sfera Ebbasta & Quavo","Famoso Remix EP",2021],["Izi","Coro Reload",2021],["Massimo Pericolo","Vita Vera Mixtape",2019],
+["Bresh","Cafè Concerto Reload",2022],["Geolier & Tedua","Buongiorno Reload",2025],["Lazza & Capo Plaza","Stardust Duo EP",2025],["Shiva","Santana Deluxe",2025],
+["Tony Effe","Icon Deluxe",2025],["Tedua","Mr. Mai Reload",2024],["Anna & Tony Effe","Baddie Icon EP",2025],["Capo Plaza","20 Deluxe",2025],
+["Geolier","Buongiorno 2.0",2025],["Lazza","New Era EP",2026],["Shiva & Geolier","Napoli-Milano EP",2026],["Sfera Ebbasta","X3",2026]
+];
+
+const EMOJIS = ["🎤","💗","✨","🌸","🦋","💜","🍓","🎀","⭐","🍒","🎧","🌈","🍬","☁️","💎","🪄","🧁","🌟","🍑","🌺"];
+
+/* ---------------- state ---------------- */
+let currentRound = [];
+let nextRound = [];
+let matchIndex = 0;
+let totalInRound = 0;
+let history = []; // for undo
+
+const battleEl = document.getElementById('battle');
+const roundLabel = document.getElementById('roundLabel');
+const matchLabel = document.getElementById('matchLabel');
+const ribbonFill = document.getElementById('ribbonFill');
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function roundName(size){
+  switch(size){
+    case 256: return "Turno 1 — Primo Round 🌸";
+    case 128: return "Turno 2 — Sedicesimi 💜";
+    case 64:  return "Turno 3 — Ottavi ✨";
+    case 32:  return "Turno 4 — Sedicesimi+ 🌈";
+    case 16:  return "Ottavi di Finale 🎀";
+    case 8:   return "Quarti di Finale 🍓";
+    case 4:   return "Semifinale 💎";
+    case 2:   return "🏆 GRAN FINALE 🏆";
+    default:  return "Round";
+  }
+}
+
+function init(){
+  currentRound = shuffle(albums);
+  nextRound = [];
+  matchIndex = 0;
+  history = [];
+  render();
+}
+
+function render(){
+  totalInRound = currentRound.length;
+
+  if(totalInRound === 1){
+    showWinner(currentRound[0]);
+    return;
+  }
+
+  const a = currentRound[matchIndex];
+  const b = currentRound[matchIndex+1];
+
+  roundLabel.textContent = roundName(totalInRound);
+  matchLabel.textContent = `Match ${Math.floor(matchIndex/2)+1} / ${totalInRound/2}`;
+
+  // overall progress across whole tournament (255 matches total)
+  const matchesDoneBefore = 256 - totalInRound; // matches resolved in earlier rounds
+  const doneThisRound = matchIndex/2;
+  const totalMatches = 255;
+  const doneSoFar = matchesDoneBefore + doneThisRound;
+  ribbonFill.style.width = Math.min(100, (doneSoFar/totalMatches)*100) + "%";
+
+  battleEl.innerHTML = `
+    <div class="card" data-pick="a">
+      <div class="emoji">${randomEmoji()}</div>
+      <div class="artist">${esc(a[0])}</div>
+      <div class="album">${esc(a[1])}</div>
+      <div class="year">${a[2]}</div>
+    </div>
+    <div class="vs">VS</div>
+    <div class="card" data-pick="b">
+      <div class="emoji">${randomEmoji()}</div>
+      <div class="artist">${esc(b[0])}</div>
+      <div class="album">${esc(b[1])}</div>
+      <div class="year">${b[2]}</div>
+    </div>
+  `;
+
+  battleEl.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('click', onPick);
+  });
+}
+
+function randomEmoji(){
+  return EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
+}
+
+function esc(s){
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+function onPick(e){
+  const cards = battleEl.querySelectorAll('.card');
+  const pick = e.currentTarget.dataset.pick;
+  const a = currentRound[matchIndex];
+  const b = currentRound[matchIndex+1];
+  const winner = pick === 'a' ? a : b;
+  const loserCard = pick === 'a' ? cards[1] : cards[0];
+  const winnerCard = pick === 'a' ? cards[0] : cards[1];
+
+  winnerCard.classList.add('chosen');
+  loserCard.classList.add('fading');
+
+  cards.forEach(c=>c.style.pointerEvents = 'none');
+
+  // save state for undo
+  history.push({
+    matchIndex, currentRound: currentRound.slice(), nextRound: nextRound.slice()
+  });
+
+  nextRound.push(winner);
+  matchIndex += 2;
+
+  setTimeout(()=>{
+    if(matchIndex >= currentRound.length){
+      currentRound = nextRound;
+      nextRound = [];
+      matchIndex = 0;
+    }
+    render();
+  }, 420);
+}
+
+function showWinner(winner){
+  roundLabel.textContent = "🏆 ABBIAMO UN VINCITORE 🏆";
+  matchLabel.textContent = "";
+  ribbonFill.style.width = "100%";
+
+  battleEl.innerHTML = `
+    <div class="winner-screen">
+      <span class="crown">👑</span>
+      <div class="winner-card">
+        <div class="emoji" style="font-size:40px;">${randomEmoji()}</div>
+        <div class="artist">${esc(winner[0])}</div>
+        <div class="album">${esc(winner[1])}</div>
+        <div class="year">${winner[2]}</div>
+      </div>
+      <p style="margin-top:18px; font-weight:600; color:var(--plum-soft);">
+        è il campione del tuo torneo uwu ✧･ﾞ: *✧･ﾞ:*
+      </p>
+    </div>
+  `;
+}
+
+document.getElementById('shuffleBtn').addEventListener('click', init);
+
+document.getElementById('undoBtn').addEventListener('click', ()=>{
+  if(history.length === 0) return;
+  const last = history.pop();
+  currentRound = last.currentRound;
+  nextRound = last.nextRound;
+  matchIndex = last.matchIndex;
+  render();
+});
+
+/* floating background sparkles */
+function spawnSparkle(){
+  const s = document.createElement('div');
+  s.className = 'sparkle';
+  s.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
+  s.style.left = Math.random()*100 + "vw";
+  const duration = 10 + Math.random()*14;
+  s.style.animationDuration = duration + "s";
+  s.style.fontSize = (16 + Math.random()*22) + "px";
+  document.body.appendChild(s);
+  setTimeout(()=> s.remove(), duration*1000 + 500);
+}
+for(let i=0;i<10;i++){
+  setTimeout(spawnSparkle, i*800);
+}
+setInterval(spawnSparkle, 1800);
+
+/* go! */
+init();
+</script>
+</body>
+</html>
